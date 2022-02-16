@@ -1,0 +1,26 @@
+server:
+  port: 9191
+
+spring:
+    application:
+        name: API-GATEWAY
+    cloud:
+        gateway:
+            routes:
+                - id: GAME-SERVICE
+                  uri: lb://GAME-SERVICE
+                  predicates:
+                    - Path=/games/**
+                - id: PLAYER-SERVICE
+                  uri: lb://PLAYER-SERVICE
+                  predicates:
+                    - Path=/players/**
+
+eureka:
+    client:
+        register-with-eureka: true
+        fetch_registry: true
+        service-url:
+            defaultZone:  http://localhost:8761/eureka/
+    instance:
+        hostname: localhost
